@@ -7,7 +7,7 @@ screen = display.set_mode((800,600))
 #recursos
 bat_imagem = image.load("batman.png")
 bat_imagem = transform.scale(bat_imagem, (200,200))
-bat_fonte= font.Font("batmfa__.ttf", 50)
+bat_fonte= font.Font("AlienBlock-Regular.ttf", 50)
 mixer.music.load("batman_1966.mp3")
 mixer.music.play(-1)
 
