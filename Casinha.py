@@ -8,7 +8,7 @@ screen = display.set_mode((800,600))
 bat_imagem = image.load("scooby")
 bat_imagem = transform.scale(bat_imagem, (200,200))
 bat_fonte= font.Font("AlienBlock-Regular.ttf", 50)
-mixer.music.load("batman_1966.mp3")
+mixer.music.load("Scoobydoogeneric.mp3")
 mixer.music.play(-1)
 
 def lignes_autour_cercle(screen, centre, rayon, nombre):
