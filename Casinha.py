@@ -20,9 +20,16 @@ def lignes_autour_cercle(screen, centre, rayon, nombre):
         draw.circle(screen, "#FFF251", centre, 4)
         draw.circle(screen, "#FFF251", (x, y), 4)
 
+clock = time.Clock()
+
+
+x=500
+speed=2
 
 running = True
 while running:
+    clock.tick(60)
+
     for ev in event.get():
         if ev.type == QUIT:
             running = False
@@ -35,10 +42,17 @@ while running:
     draw.circle(screen, "#FFF251", (100,100),50)
     lignes_autour_cercle(screen,(100,100),100,8)
 
-    draw.circle(screen, "white", (500,100),50)
-    draw.circle(screen, "white", (550,100),50)
-    draw.circle(screen, "white", (600,100),50)
-    draw.circle(screen, "white", (650,100),50)
+    x += speed
+
+    if x >= 600:
+        speed = -2
+    if x <= 50:
+        speed = 2
+    
+    draw.circle(screen, "white", (x,100),50)
+    draw.circle(screen, "white", (x+50,100),50)
+    draw.circle(screen, "white", (x+100,100),50)
+    draw.circle(screen, "white", (x+150,100),50)
 
     # HOUSE
     draw.polygon(screen, "#F2883B",((100,300),(200,200),(300,300)))
