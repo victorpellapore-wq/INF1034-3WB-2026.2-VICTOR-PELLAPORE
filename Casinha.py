@@ -7,8 +7,8 @@ screen = display.set_mode((800,600))
 #recursos
 bat_imagem = image.load("scooby")
 bat_imagem = transform.scale(bat_imagem, (200,200))
-bat_fonte= font.Font("AlienBlock-Regular.ttf", 50)
-mixer.music.load("Scoobydoogeneric.mp3")
+bat_fonte= font.Font("AlienBlock-Regular.ttf", 30)
+mixer.music.load("ScoobyDoo_Generic.mp3")
 mixer.music.play(-1)
 
 def lignes_autour_cercle(screen, centre, rayon, nombre):
@@ -53,7 +53,7 @@ while running:
 
     screen.blit(bat_imagem,(400,400))
 
-    steve_text = bat_fonte.render("I am BATMAN!", True, "#000000")
+    steve_text = bat_fonte.render("Scooby-Doo by-DOOOOOOO!", True, "#000000")
     screen.blit(steve_text,(300,300))
 
 
