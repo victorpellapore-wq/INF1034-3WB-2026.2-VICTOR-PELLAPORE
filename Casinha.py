@@ -24,7 +24,7 @@ clock = time.Clock()
 
 
 x=500
-speed=2
+speed=1
 
 running = True
 while running:
@@ -41,13 +41,15 @@ while running:
     draw.rect(screen, "#489D25", (0,500,800,100))
     draw.circle(screen, "#FFF251", (100,100),50)
     lignes_autour_cercle(screen,(100,100),100,8)
+    if event.type == MOUSEMOTION:
+        centre[0], centre[1] = event.pos
 
     x += speed
 
     if x >= 600:
-        speed = -2
+        speed = -1
     if x <= 50:
-        speed = 2
+        speed = 1
     
     draw.circle(screen, "white", (x,100),50)
     draw.circle(screen, "white", (x+50,100),50)
