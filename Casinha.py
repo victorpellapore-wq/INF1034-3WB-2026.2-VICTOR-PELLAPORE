@@ -63,6 +63,14 @@ while running:
         centre[1]-=5
     if touches[K_DOWN]:
         centre[1]+=5
+    if centre[0]<= 100:
+        centre[0] = 100
+    if centre[0]>= 700:
+        centre[0] = 700
+    if centre[1]<= 100:
+        centre[1] = 100
+    if centre[1]>= 500:
+        centre[1] = 500
 
 
 
