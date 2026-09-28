@@ -95,9 +95,9 @@ def jogar():
 
     vidas = 6
 
-    print("\n" + "=" * 40)
+    print("\n" + "="*40)
     print("          JOGO DA FORCA")
-    print("=" * 40)
+    print("="*40)
     print("Tema: ANIMAIS")
     print("Você possui 6 vidas.")
     print("Digite uma letra ou tente adivinhar a palavra inteira.")
@@ -112,13 +112,12 @@ def jogar():
         if letras_tentadas:
             print("Letras já tentadas:", " ".join(sorted(letras_tentadas)))
 
-        entrada = input("\nDigite uma letra ou a palavra: ").strip().lower()
+        entrada = input("\nDigite uma letra ou a palavra: ").strip()
 
         # Validação: somente letras
         if not entrada:
             print("❌ Entrada vazia! Digite uma letra ou uma palavra.")
             continue
-
         if not validar_entrada(entrada):
             print("❌ Entrada inválida! Digite SOMENTE LETRAS.")
             continue
@@ -129,7 +128,6 @@ def jogar():
             if entrada == palavra:
                 print("\n🎉 PARABÉNS! Você acertou a palavra!")
                 print(f"A palavra era: {palavra}")
-                print("🏆 Você venceu! +100 XP")
                 return
 
             else:
