@@ -21,6 +21,7 @@ def lignes_autour_cercle(screen, centre, rayon, nombre):
         draw.circle(screen, "#FFF251", (x, y), 4)
 
 clock = time.Clock()
+centre = [100, 50]
 
 
 x=500
@@ -33,19 +34,29 @@ while running:
     for ev in event.get():
         if ev.type == QUIT:
             running = False
+        if ev.type == MOUSEMOTION:
+             centre[0], centre[1] = ev.pos
     
     ## desenhar os elementos na tela
     # screen.fill(151,209,250)
     screen.fill("#97D1FA")
 
     draw.rect(screen, "#489D25", (0,500,800,100))
-    draw.circle(screen, "#FFF251", (100,100),50)
-    lignes_autour_cercle(screen,(100,100),100,8)
-    if event.type == MOUSEMOTION:
-        centre[0], centre[1] = event.pos
+    draw.circle(screen, "#FFF251", centre,50)
+    lignes_autour_cercle(screen,centre,100,8)
+
+    touches = key.get_pressed()
+    
+    if touches[K_LEFT]:
+        centre[0]-=5
+    if touches[K_RIGHT]:
+        centre[0]+=5
+    if touches[K_UP]:
+        centre[1]-=5
+    if touches[K_DOWN]:
+        centre[1]+=5
 
     x += speed
-
     if x >= 600:
         speed = -1
     if x <= 50:
