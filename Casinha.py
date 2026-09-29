@@ -8,8 +8,8 @@ screen = display.set_mode((800,600))
 scooby_imagem = image.load("scooby")
 scooby_imagem = transform.scale(scooby_imagem, (200,200))
 scooby_fonte= font.Font("AlienBlock-Regular.ttf", 30)
-#mixer.music.load("ScoobyDoo_Generic.mp3")
-#mixer.music.play(-1)
+mixer.music.load("ScoobyDoo_Generic.mp3")
+mixer.music.play(-1)
 
 def lignes_autour_cercle(screen, centre, rayon, nombre):
     for i in range(nombre):
@@ -51,8 +51,9 @@ while running:
     if centre[0]<300:
         screen.fill("#87CEEB")
         if ev.type == MOUSEBUTTONUP:
-            mixer.music.load("ScoobyDoo_Generic.mp3")
+            mixer.music.load("Scooby doo laugh.mp3")
             mixer.music.play(-1)
+            mixer_music.stop
     elif centre[0]<600:
         screen.fill("#F5B041")
     else:
