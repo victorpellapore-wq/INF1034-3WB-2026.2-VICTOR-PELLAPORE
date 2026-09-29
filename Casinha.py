@@ -11,6 +11,8 @@ scooby_fonte= font.Font("/Users/victorpellapore/Desktop/INF1034-3WB-2026.2-VICTO
 mixer.music.load("/Users/victorpellapore/Desktop/INF1034-3WB-2026.2-VICTOR_PELLAPORE/INF1034-3WB-2026.2-VICTOR-PELLAPORE/ScoobyDoo_Generic.mp3")
 mixer.music.play(-1)
 Scooby_doo_laugh = mixer.Sound("/Users/victorpellapore/Desktop/INF1034-3WB-2026.2-VICTOR_PELLAPORE/INF1034-3WB-2026.2-VICTOR-PELLAPORE/Scooby doo laugh.mp3")
+Pecresse = mixer.Sound("/Users/victorpellapore/Desktop/INF1034-3WB-2026.2-VICTOR_PELLAPORE/INF1034-3WB-2026.2-VICTOR-PELLAPORE/pecresse-debout.mp3")
+Zemmour = mixer.Sound("/Users/victorpellapore/Desktop/INF1034-3WB-2026.2-VICTOR_PELLAPORE/INF1034-3WB-2026.2-VICTOR-PELLAPORE/zemmour-oh-comme-cest-bizarre.mp3")
 
 def lignes_autour_cercle(screen, centre, rayon, nombre):
     for i in range(nombre):
@@ -56,11 +58,11 @@ while running:
     elif centre[0]<600:
         screen.fill("#F5B041")
         if ev.type == MOUSEBUTTONUP:
-            Scooby_doo_laugh.play(1)
+            Pecresse.play(1)
     else:
         screen.fill("#191970")
         if ev.type == MOUSEBUTTONUP:
-            Scooby_doo_laugh.play(1)
+            Zemmour.play(1)
     
     draw.rect(screen, "#489D25", (0,500,800,100))
     draw.circle(screen, "#FFF251", centre,50)
@@ -83,7 +85,6 @@ while running:
         centre[1] = 100
     if centre[1]>= 500:
         centre[1] = 500
-
 
 
     x += speed
