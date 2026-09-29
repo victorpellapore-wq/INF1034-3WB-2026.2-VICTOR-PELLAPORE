@@ -5,11 +5,11 @@ init()
 screen = display.set_mode((800,600))
 
 #recursos
-bat_imagem = image.load("scooby")
-bat_imagem = transform.scale(bat_imagem, (200,200))
-bat_fonte= font.Font("AlienBlock-Regular.ttf", 30)
-mixer.music.load("ScoobyDoo_Generic.mp3")
-mixer.music.play(-1)
+scooby_imagem = image.load("scooby")
+scooby_imagem = transform.scale(scooby_imagem, (200,200))
+scooby_fonte= font.Font("AlienBlock-Regular.ttf", 30)
+#mixer.music.load("ScoobyDoo_Generic.mp3")
+#mixer.music.play(-1)
 
 def lignes_autour_cercle(screen, centre, rayon, nombre):
     for i in range(nombre):
@@ -30,6 +30,7 @@ speed=1
 running = True
 while running:
     clock.tick(60)
+    touches = key.get_pressed()
 
     for ev in event.get():
         if ev.type == QUIT:
@@ -47,13 +48,20 @@ while running:
 
     ## desenhar os elementos na tela
     # screen.fill(151,209,250)
-    screen.fill("#97D1FA")
-
+    if centre[0]<300:
+        screen.fill("#87CEEB")
+        if ev.type == MOUSEBUTTONUP:
+            mixer.music.load("ScoobyDoo_Generic.mp3")
+            mixer.music.play(-1)
+    elif centre[0]<600:
+        screen.fill("#F5B041")
+    else:
+        screen.fill("#191970")
+    
     draw.rect(screen, "#489D25", (0,500,800,100))
     draw.circle(screen, "#FFF251", centre,50)
     lignes_autour_cercle(screen,centre,100,8)
 
-    touches = key.get_pressed()
     
     if touches[K_LEFT]:
         centre[0]-=5
@@ -96,9 +104,9 @@ while running:
     draw.polygon(screen, "brown",((600,400),(630,400),(630,500),(600,500)))
     draw.circle(screen, "#489D25", (615,350),80)
 
-    screen.blit(bat_imagem,(400,400))
+    screen.blit(scooby_imagem,(400,400))
 
-    steve_text = bat_fonte.render("Scooby-Doo by-DOOOOOOO!", True, "#000000")
+    steve_text = scooby_fonte.render("Scooby-Doo by-DOOOOOOO!", True, "#000000")
     screen.blit(steve_text,(300,300))
 
 
