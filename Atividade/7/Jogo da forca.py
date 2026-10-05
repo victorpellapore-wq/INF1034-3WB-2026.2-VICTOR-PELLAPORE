@@ -92,9 +92,7 @@ def jogar():
     palavra = escolher_palavra()
     letras_acertadas = set()
     letras_tentadas = set()
-
     vidas = 6
-
     print("\n" + "="*40)
     print("          JOGO DA FORCA")
     print("="*40)
