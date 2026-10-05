@@ -1,8 +1,8 @@
 from random import choice
 
-PALAVRAS = ["cachorro","gato","elefante","girafa","tigre", "leao","macaco","pinguim","tartaruga","coelho"]
+PALAVRAS=["cachorro","gato","elefante","girafa","tigre", "leao","macaco","pinguim","tartaruga","coelho"]
 
-FORCA = [
+FORCA=[
     """
        _______
       |/      |
