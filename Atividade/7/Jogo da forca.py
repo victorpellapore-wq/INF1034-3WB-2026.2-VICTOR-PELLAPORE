@@ -1,7 +1,6 @@
 from random import choice
 
 PALAVRAS=["cachorro","gato","elefante","girafa","tigre", "leao","macaco","pinguim","tartaruga","coelho"]
-
 FORCA=[
     """
        _______
@@ -74,25 +73,21 @@ def escolher_palavra():
 
 def mostrar_palavra(palavra, letras_acertadas):
     resultado = ""
-
     for letra in palavra:
         if letra in letras_acertadas:
-            resultado += letra + " "
+            resultado+=letra + " "
         else:
-            resultado += "_ "
-
+            resultado+= "_ "
     return resultado.strip()
-
 
 def validar_entrada(entrada):
     return entrada.isalpha()
 
-
 def jogar():
-    palavra = escolher_palavra()
-    letras_acertadas = set()
-    letras_tentadas = set()
-    vidas = 6
+    palavra=escolher_palavra()
+    vidas=6
+    letras_acertadas=set()
+    letras_tentadas =set()
     print("\n" + "="*40)
     print("          JOGO DA FORCA")
     print("="*40)
@@ -100,65 +95,45 @@ def jogar():
     print("Você possui 6 vidas.")
     print("Digite uma letra ou tente adivinhar a palavra inteira.")
     print("=" * 40)
-
     while vidas > 0:
-
         print(FORCA[6 - vidas])
         print(f"\nVidas restantes: {vidas}")
         print(f"Palavra: {mostrar_palavra(palavra, letras_acertadas)}")
-
         if letras_tentadas:
             print("Letras já tentadas:", " ".join(sorted(letras_tentadas)))
-
         entrada = input("\nDigite uma letra ou a palavra: ").strip()
-
-        # Validação: somente letras
         if not entrada:
             print("❌ Entrada vazia! Digite uma letra ou uma palavra.")
             continue
         if not validar_entrada(entrada):
             print("❌ Entrada inválida! Digite SOMENTE LETRAS.")
             continue
-
-        # Caso o jogador tente adivinhar a palavra inteira
         if len(entrada) > 1:
-
             if entrada == palavra:
                 print("\n🎉 PARABÉNS! Você acertou a palavra!")
                 print(f"A palavra era: {palavra}")
                 return
-
             else:
                 vidas -= 1
                 print("\n❌ Palavra incorreta!")
                 print("Você perdeu 1 vida.")
-
-        # Caso o jogador digite apenas uma letra
         else:
             letra = entrada
-
             if letra in letras_tentadas:
                 print("⚠️ Você já tentou essa letra!")
                 continue
-
             letras_tentadas.add(letra)
-
             if letra in palavra:
                 letras_acertadas.add(letra)
                 print("✅ Boa! A letra está na palavra.")
-
             else:
                 vidas -= 1
                 print("❌ Essa letra não está na palavra.")
-
-        # Verifica se a palavra foi completamente descoberta
         if all(letra in letras_acertadas for letra in palavra):
             print("\n🎉 PARABÉNS! Você descobriu a palavra!")
             print(f"A palavra era: {palavra}")
             print("🏆 Você venceu! +100 XP")
             return
-
-    # Caso as 6 vidas tenham acabado
     print(FORCA[6])
     print("\n💀 GAME OVER!")
     print(f"A palavra era: {palavra}")
@@ -169,20 +144,14 @@ def jogar():
 def main():
     while True:
         jogar()
-
         print("\n" + "=" * 40)
         resposta = input("Deseja jogar novamente? (s/n): ").strip().lower()
-
         while resposta not in ("s", "n"):
             print("❌ Digite apenas 's' para sim ou 'n' para não.")
-            resposta = input("Deseja jogar novamente? (s/n): ").strip().lower()
-
+            resposta=input("Deseja jogar novamente? (s/n): ").strip().lower()
         if resposta == "n":
             print("\nObrigado por jogar! 👋")
             break
-
-        print("\n🔄 Reiniciando o jogo...")
-
 
 if __name__ == "__main__":
     main()
