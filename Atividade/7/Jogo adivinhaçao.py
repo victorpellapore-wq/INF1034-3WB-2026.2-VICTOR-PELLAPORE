@@ -36,7 +36,3 @@ while True:
             print("Encontrei !")
             print("Numero de tentativas :", tentativas)
             break
-
-
-
-   
