@@ -1,0 +1,15 @@
+import random
+
+numero_secreto= random.randint(1, 1023)
+tentativas=0
+while True:
+    proposiçao = int(input("Adivinha o numero : "))
+    tentativas+= 1
+    if numero_secreto > proposiçao:
+        print(1)
+    elif numero_secreto < proposiçao:
+        print(-1)
+    else:
+        print(0)
+        print("Numro de tentativas :", tentativas)
+        break
