@@ -1,13 +1,5 @@
 import pygame
 
-## Definições de funções
-# def valida_email(email):
-#     sufixo = email[-8:]
-#     if sufixo == "@puc.com":
-#         return True
-#     else:
-#         return False
-
 def valida_email(email):
     return email[-8:] == "@puc.com"
 
@@ -44,11 +36,20 @@ def valida_senha(senha):
 def criptografa(senha):
     senha_cripto = ""
     for carac in senha:
-        if carac.isalpha():
+        if carac.islower():
             pos_alpha = ord(carac) - ord('a')
             pos_alpha = (pos_alpha + 3) % 26
             pos_ascii = pos_alpha + ord('a')
             senha_cripto += chr(pos_ascii)
+        elif carac.isupper():
+            pos_alpha = ord(carac) - ord('A')
+            pos_alpha = (pos_alpha + 3) % 26
+            pos_ascii = pos_alpha + ord('A')
+            senha_cripto += chr(pos_ascii)
+        elif carac.isdigit():
+            senha_cripto += carac
+        else:
+            senha_cripto += carac
     return senha_cripto
 
 running = True
@@ -56,18 +57,20 @@ running = True
 while running:
     print("\n" + "=" * 40)
     email = input("Digite seu email: ")
-    for i in valida_email(email)==False  :
+    while valida_email(email)==False  :
         print("O seu e-mail não é válido. Digite novamente!")
-        print("Digite seu email:")
+        email = input("Digite seu email: ")
     print("Parabéns, o seu e-mail é válido!")
 
     senha = input("Digite sua senha: ")
-    if valida_senha(senha) == True :
-        print("Parabéns, a sua senha é válida!")
-        print("\n" + "=" * 40)
-        print("A criptografia de César da sua senha é", criptografa(senha))
-    elif valida_senha(senha) == False :
-        print ("A sua senha não é válida. Digite novamente!")
+
+    while valida_senha(senha) == False :
+        print("A sua senha não é válida. Digite novamente!")
+        senha = input("Digite sua senha: ")
+
+    print("Parabéns, a sua senha é válida!")
+    print("\n" + "=" * 40)
+    print("A criptografia de César da sua senha é", criptografa(senha))
 
 
 ## Configurar e utilizar o pygame
