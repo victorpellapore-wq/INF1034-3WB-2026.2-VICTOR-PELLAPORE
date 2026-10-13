@@ -54,31 +54,33 @@ def criptografa(senha):
 
 running = True
 
-while running:
-    print("\n" + "=" * 40)
-    email = input("Digite seu email: ")
-    while valida_email(email)==False  :
-        print("O seu e-mail não é válido. Digite novamente!")
-        email = input("Digite seu email: ")
-    print("Parabéns, o seu e-mail é válido!")
-
-    senha = input("Digite sua senha: ")
-
-    while valida_senha(senha) == False :
-        print("A sua senha não é válida. Digite novamente!")
-        senha = input("Digite sua senha: ")
-
-    print("Parabéns, a sua senha é válida!")
-    print("\n" + "=" * 40)
-    print("A criptografia de César da sua senha é", criptografa(senha))
+#while running:
+   # print("\n" + "=" * 40)
+   # email = input("Digite seu email: ")
+   # while valida_email(email)==False  :
+  #      print("O seu e-mail não é válido. Digite novamente!")
+  #      email = input("Digite seu email: ")
+  #  print("Parabéns, o seu e-mail é válido!")
+  #  senha = input("Digite sua senha: ")
+   # while valida_senha(senha) == False :
+   #     print("A sua senha não é válida. Digite novamente!")
+  #      senha = input("Digite sua senha: ")
+   # print("Parabéns, a sua senha é válida!")
+   # print("\n" + "=" * 40)
+  #  print("A criptografia de César da sua senha é", criptografa(senha))
 
 
 ## Configurar e utilizar o pygame
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
+pygame.display.set_caption("Login")
+
 running = True
 
 input_string = ""
+input_string1 = ""
+input_string2 = ""
+champ_actif = "input_string1"
 valid_email = False
 pressed_enter = False
 fonte = pygame.font.Font(size=50)
@@ -88,26 +90,65 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.KEYDOWN:
+        elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_BACKSPACE:
-                input_string = input_string[:-1]
+                if champ_actif == "input_string1":
+                    input_string1 = input_string1[:-1]
+                else:
+                    input_string2 = input_string2[:-1]
             elif event.key == pygame.K_RETURN:
-                pressed_enter = True
-                valid_email = valida_email(input_string)
+                if champ_actif == "input_string1":
+                    valid_email = valida_email(input_string1)
+                    if valid_email:
+                        champ_actif = "input_string2"
+                        pressed_enter = False
+                    else:
+                        pressed_enter = True
+                else:
+                    valid_senha = valida_senha(input_string2)
+                    pressed_enter = True
             else:
-                input_string += event.unicode
+                if champ_actif == "input_string1":
+                    input_string1 += event.unicode
+                else:
+                    input_string2 += event.unicode
 
     screen.fill("white")
-    pygame.draw.rect(screen, "black", (100, 100, 500, 50), 3)
-    input_text = fonte.render(input_string, True, "#000000")
-    screen.blit(input_text, (120, 105))
+    pygame.draw.rect(screen, "black", (400, 300, 500, 50), 3)
+    pygame.draw.rect(screen, "black", (400, 425, 500, 50), 3)
+    input_text1 = fonte.render(input_string1, True, "#000000")
+    input_text2 = fonte.render(input_string2, True, "#000000")
+    
+    title_font = pygame.font.Font(None, 48)
+    font = pygame.font.Font(None, 32)
+    titre = title_font.render("Login", True, "black")
+    screen.blit(titre, (600, 150))
+
+    screen.blit(font.render("Email:", True, "black"), (400, 275))
+    screen.blit(font.render("Senha:", True, "black"), (400, 400))
+
+    screen.blit(input_text1, (420, 305))
+    senha_oculta = "*" * len(input_string2)
+    screen.blit(font.render(senha_oculta, True, "black"), (420, 440))
+
     if pressed_enter:
         if valid_email:
             valid_text = fonte_validation.render("Parabéns, o seu e-mail é válido!", True, "green")
-            screen.blit(valid_text, (120, 180))
+            screen.blit(valid_text, (400, 360))
+            if valid_senha:
+                    valid_text = fonte_validation.render("Parabéns, a sua senha é válida!", True, "green")
+                    screen.blit(valid_text, (400, 485))
+                    if valid_email and valid_senha:
+                        senha_cripto = criptografa(input_string2)
+                        valid_text = fonte_validation.render(f"A criptografia de César da sua senha é: {senha_cripto}", True, "blue")
+                        screen.blit(valid_text, (400, 520))
+            else:
+                valid_text = fonte_validation.render("A sua senha não é válida. Digite novamente!", True, "red")
+                screen.blit(valid_text, (400, 485))
+
         else:
             valid_text = fonte_validation.render("O seu e-mail não é válido. Digite novamente!", True, "red")
-            screen.blit(valid_text, (120, 180))
-
+            screen.blit(valid_text, (400, 360))
+        
     pygame.display.update()
     

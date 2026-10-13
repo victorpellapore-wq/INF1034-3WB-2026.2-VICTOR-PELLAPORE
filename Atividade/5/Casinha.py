@@ -5,14 +5,14 @@ init()
 screen = display.set_mode((800,600))
 
 #recursos
-scooby_imagem = image.load("/Users/victorpellapore/Desktop/INF1034-3WB-2026.2-VICTOR_PELLAPORE/INF1034-3WB-2026.2-VICTOR-PELLAPORE/scooby")
+scooby_imagem = image.load("scooby")
 scooby_imagem = transform.scale(scooby_imagem, (200,200))
-scooby_fonte= font.Font("/Users/victorpellapore/Desktop/INF1034-3WB-2026.2-VICTOR_PELLAPORE/INF1034-3WB-2026.2-VICTOR-PELLAPORE/AlienBlock-Regular.ttf", 30)
-mixer.music.load("/Users/victorpellapore/Desktop/INF1034-3WB-2026.2-VICTOR_PELLAPORE/INF1034-3WB-2026.2-VICTOR-PELLAPORE/ScoobyDoo_Generic.mp3")
+scooby_fonte= font.Font("AlienBlock-Regular.ttf", 30)
+mixer.music.load("ScoobyDoo_Generic.mp3")
 mixer.music.play(-1)
-Scooby_doo_laugh = mixer.Sound("/Users/victorpellapore/Desktop/INF1034-3WB-2026.2-VICTOR_PELLAPORE/INF1034-3WB-2026.2-VICTOR-PELLAPORE/Scooby doo laugh.mp3")
-Pecresse = mixer.Sound("/Users/victorpellapore/Desktop/INF1034-3WB-2026.2-VICTOR_PELLAPORE/INF1034-3WB-2026.2-VICTOR-PELLAPORE/pecresse-debout.mp3")
-Zemmour = mixer.Sound("/Users/victorpellapore/Desktop/INF1034-3WB-2026.2-VICTOR_PELLAPORE/INF1034-3WB-2026.2-VICTOR-PELLAPORE/zemmour-oh-comme-cest-bizarre.mp3")
+Scooby_doo_laugh = mixer.Sound("Scooby doo laugh.mp3")
+Pecresse = mixer.Sound("pecresse-debout.mp3")
+Zemmour = mixer.Sound("zemmour-oh-comme-cest-bizarre.mp3")
 
 def lignes_autour_cercle(screen, centre, rayon, nombre):
     for i in range(nombre):
