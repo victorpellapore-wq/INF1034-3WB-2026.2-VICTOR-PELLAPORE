@@ -1,4 +1,5 @@
 import pygame
+from time import *
 
 def valida_email(email):
     return email[-8:] == "@puc.com"
@@ -85,6 +86,8 @@ valid_email = False
 pressed_enter = False
 fonte = pygame.font.Font(size=50)
 fonte_validation = pygame.font.Font(size=25)
+tempo_pasado = None
+casinha_lançada = False
 
 while running:
     for event in pygame.event.get():
@@ -142,6 +145,17 @@ while running:
                         senha_cripto = criptografa(input_string2)
                         valid_text = fonte_validation.render(f"A criptografia de César da sua senha é: {senha_cripto}", True, "blue")
                         screen.blit(valid_text, (400, 520))
+                    if valid_email and valid_senha and not casinha_lançada:
+                        tempo_pasado = pygame.time.get_ticks()
+                        casinha_lançada = True
+                    if tempo_pasado is not None:
+                        tempo_decorrido = pygame.time.get_ticks() - tempo_pasado
+                    if tempo_decorrido >= 3000:
+                        import Casinha
+                        tempo_pasado = None
+                    if tempo_pasado is not None:
+                        texte = fonte_validation.render("Conexão conseguida ! Lançamento do jogo...",True,"green")
+                    screen.blit(texte, (400, 560))
             else:
                 valid_text = fonte_validation.render("A sua senha não é válida. Digite novamente!", True, "red")
                 screen.blit(valid_text, (400, 485))
