@@ -1,5 +1,4 @@
-from turtle import *
-
+from turtle import*
 t = Turtle()
 t.hideturtle()
 t.pu()
@@ -8,9 +7,15 @@ t.pd()
 t.speed(0)
 
 for i in range (8):
-    for i in range(4):
+    for i in range(8):
         t.fd(100)
-        t.lt(90)
+        t.lt(45)
     t.fd(100)
 
+
+
+
 mainloop()
+
+
+

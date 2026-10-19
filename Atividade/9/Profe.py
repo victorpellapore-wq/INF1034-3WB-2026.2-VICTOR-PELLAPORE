@@ -1,7 +1,6 @@
 import turtle
 from random import randint
 
-
 def randomColor():
   return (randint(0, 255), randint(0, 255), randint(0, 255))
 
@@ -73,6 +72,7 @@ turtle.colormode(255)
 # t.speed("slowest")
 t.speed(0)
 t.pu()
+
 
 ## Desenhando o "chifre"
 # t.goto(-100, -200)
