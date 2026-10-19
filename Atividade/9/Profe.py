@@ -1,5 +1,9 @@
 import turtle
 from random import randint
+turtle.colormode(255)
+
+t = turtle.Turtle()
+t.speed()
 
 def randomColor():
   return (randint(0, 255), randint(0, 255), randint(0, 255))
@@ -17,7 +21,7 @@ def drawSquare(t, size):
   t.pu()
 
 
-def drawSquareFractal(t, size, step=50):
+def drawSquareFractal(t, size, step):
   if step < 0 or size < 1:
     return
   t.pd()
@@ -41,6 +45,7 @@ def drawStarFractal(t, size):
     drawStarFractal(t, size / 3)
     t.lt(216)
 
+drawStarFractal(t, 44)
 
 def treeFractal(t, size, angle, nivel):
   if size < 40:
