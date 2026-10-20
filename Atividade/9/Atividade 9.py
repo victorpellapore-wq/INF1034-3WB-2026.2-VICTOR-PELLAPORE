@@ -36,6 +36,31 @@ def estrela(t, size, angulo):
     t.end_fill()
 
 
+def treeFractal(t, size, angle, nivel):
+    if size < 40:
+        return
+    t.pd()
+    t.fd(size)
+
+    # right tree 
+    t.rt(angle)
+    t.fd(size)
+    treeFractal(t, size * 0.8, angle, nivel - 1)
+    t.back(size)
+
+    turtle.pencolor(0, 255 // nivel, 0)
+
+    # left tree
+    t.lt(2 * angle)
+    t.fd(size)
+    treeFractal(t, size * 0.8, angle, nivel - 1)
+    t.back(size)
+
+    turtle.pencolor(0, 255 // nivel, 0)
+    t.lt(-angle)
+    t.back(size)
+
+
 #estrela(t,size,Pontas)
 
 

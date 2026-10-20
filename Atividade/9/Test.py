@@ -1,22 +1,35 @@
-from turtle import *
-t = Turtle()
-t.speed(0)
+import turtle
+t = turtle.Turtle()
+turtle.colormode(255)
 
 
-
-def estrela(t, size, angulo):
-    if size <4:
+def treeFractal(t, size, angle, nivel):
+    if size < 40:
         return
+    t.pd()
+    t.fd(size)
 
-    for i in range(angulo):
-        t.fd(size)
-        estrela(t, size/3, angulo)
-        t.rt(180 - 180 / angulo)
-        t.fd(size)
-        t.lt(180 - 180 / angulo)
-        t.rt(360 / angulo)
+    t.rt(angle)
+    t.fd(size)
+    treeFractal(t, size * 0.8, angle, nivel - 1)
+    t.back(size)
+    turtle.pencolor(0, 255 // nivel, 0)
 
-estrela(t, 100, 4)
+    t.lt(angle)
+    t.fd(size)
+    treeFractal(t, size * 0.8, angle, nivel - 1)
+    t.back(size)
+    turtle.pencolor(0, 255 // nivel, 0)
 
+    t.lt(angle)
+    t.fd(size)
+    treeFractal(t, size * 0.8, angle, nivel - 1)
+    t.back(size)
+    turtle.pencolor(0, 255 // nivel, 0)
+
+    t.rt(angle)
+    t.back(size)
+
+treeFractal(t, 80, 40, 20)
 
 mainloop()

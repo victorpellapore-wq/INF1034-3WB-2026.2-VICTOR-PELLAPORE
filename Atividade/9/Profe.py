@@ -45,17 +45,13 @@ def drawStarFractal(t, size):
     drawStarFractal(t, size / 3)
     t.lt(216)
 
-
-
-estrela(t, 400, 6)
-
 def treeFractal(t, size, angle, nivel):
   if size < 40:
     return
   t.pd()
   t.fd(size)
 
-  # right tree
+  # right tree 
   t.rt(angle)
   t.fd(size)
   treeFractal(t, size * 0.8, angle, nivel - 1)
@@ -92,9 +88,9 @@ t.pu()
 # drawStarFractal(t, 200)
 
 ## Desenhando a árvore
-# t.goto(0, -200)
-# t.lt(90)
-# treeFractal(t, 80, 40, 20)
-
+t.goto(0, -200)
+t.lt(90)
+treeFractal(t, 80, 40, 20)
+turtle.done()
 ## Desenhando uma espiral
 # drawSpiral(t)
