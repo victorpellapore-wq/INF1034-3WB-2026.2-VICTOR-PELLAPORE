@@ -9,14 +9,14 @@ t.speed(0)
 
 
 
-for i in range (8):
-    for i in range(8):
-        t.fd(100)
-        t.lt(45)
-    t.fd(100)
+#for i in range (8):
+   # for i in range(8):
+   #    t.fd(100)
+   #     t.lt(45)
+    #t.fd(100)
 
-size = int(textinput("Tamanho da estrela","Entre o tamanho da estrela"))
-Pontas = int(textinput("Número de puntas","Entre o número de puntas"))
+#size = int(textinput("Tamanho da estrela","Entre o tamanho da estrela"))
+#Pontas = int(textinput("Número de puntas","Entre o número de puntas"))
 
 def randomColor():
     return (randint(0, 100), randint(0, 100), randint(100, 255))
@@ -36,7 +36,7 @@ def estrela(t, size, angulo):
     t.end_fill()
 
 
-def treeFractal(t, size, angle, nivel):
+def SnowFractal(t, size, angle, nivel):
     if size < 40:
         return
     t.pd()
@@ -45,21 +45,30 @@ def treeFractal(t, size, angle, nivel):
     # right tree 
     t.rt(angle)
     t.fd(size)
-    treeFractal(t, size * 0.8, angle, nivel - 1)
+    SnowFractal(t, size * 0.8, angle, nivel - 1)
     t.back(size)
+    t.pencolor(0, 255 // nivel, 0)
 
-    turtle.pencolor(0, 255 // nivel, 0)
-
-    # left tree
-    t.lt(2 * angle)
+    t.lt(angle)
     t.fd(size)
-    treeFractal(t, size * 0.8, angle, nivel - 1)
+    SnowFractal(t, size * 0.8, angle, nivel - 1)
     t.back(size)
+    t.pencolor(0, 255 // nivel, 0)
 
-    turtle.pencolor(0, 255 // nivel, 0)
+    t.lt(angle)
+    t.fd(size)
+    SnowFractal(t, size * 0.8, angle, nivel - 1)
+    t.back(size)
+    t.pencolor(0, 255 // nivel, 0)
+
     t.lt(-angle)
     t.back(size)
 
+    
+
+
+t.lt(90)
+SnowFractal(t, 80, 30, 20)
 
 #estrela(t,size,Pontas)
 
