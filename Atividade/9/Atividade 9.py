@@ -1,23 +1,28 @@
 from turtle import *
 from random import *
+from time import sleep
 t = Turtle()
 colormode(255)
 t.hideturtle()
 t.pu()
-t.pd()
 t.speed(0)
+t.goto(-400, 0)
+t.pd()
 
+# desenho recursivo fácil
+for i in range (8):
+   for i in range(8):
+        t.fd(70)
+        t.lt(45)
+   t.fd(100)
 
+sleep(2)
+t.clear()
+t.pu()
+t.goto(0,0)
+t.pd()
 
-#for i in range (8):
-   # for i in range(8):
-   #    t.fd(100)
-   #     t.lt(45)
-    #t.fd(100)
-
-#size = int(textinput("Tamanho da estrela","Entre o tamanho da estrela"))
-#Pontas = int(textinput("Número de puntas","Entre o número de puntas"))
-
+# desenho recursivo medio
 def randomColor():
     return (randint(0, 100), randint(0, 100), randint(100, 255))
 
@@ -35,7 +40,18 @@ def estrela(t, size, angulo):
         estrela(t, size / 3, angulo)
     t.end_fill()
 
+size = int(textinput("Tamanho da estrela","Entre o tamanho da estrela"))
+Pontas = int(textinput("Número de puntas","Entre o número de puntas"))
 
+estrela(t,size,Pontas)
+
+sleep(2)
+t.clear()
+t.pu()
+t.goto(0,0)
+t.pd()
+
+# desenho recursivo difícil
 def SnowBranchFractal(t, size, angle, nivel):
     if size < 40:
         return
@@ -63,17 +79,8 @@ def SnowBranchFractal(t, size, angle, nivel):
     t.lt(-angle)
     t.back(size)
 
-
-
 for i in range (4):
     SnowBranchFractal(t, 80, 30, 20)
     t.rt(90)
-
-
-
-#estrela(t,size,Pontas)
-
-
-
 
 mainloop()
