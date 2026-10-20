@@ -7,9 +7,16 @@ t.pu()
 t.pd()
 t.speed(0)
 
-size = int(textinput("Tamaño da estrela","Ingrese o tamaño da estrela"))
-Pontas = int(textinput("Número de puntas","Ingrese el número de puntas"))
 
+
+for i in range (8):
+    for i in range(8):
+        t.fd(100)
+        t.lt(45)
+    t.fd(100)
+
+size = int(textinput("Tamanho da estrela","Entre o tamanho da estrela"))
+Pontas = int(textinput("Número de puntas","Entre o número de puntas"))
 
 def randomColor():
     return (randint(0, 100), randint(0, 100), randint(100, 255))
@@ -29,19 +36,9 @@ def estrela(t, size, angulo):
     t.end_fill()
 
 
-estrela(t,size,Pontas)
+#estrela(t,size,Pontas)
 
 
-
-
-for i in range (8):
-    for i in range(8):
-        t.fd(100)
-        t.lt(45)
-    t.fd(100)
 
 
 mainloop()
-
-
-
