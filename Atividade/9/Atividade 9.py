@@ -36,39 +36,40 @@ def estrela(t, size, angulo):
     t.end_fill()
 
 
-def SnowFractal(t, size, angle, nivel):
+def SnowBranchFractal(t, size, angle, nivel):
     if size < 40:
         return
     t.pd()
     t.fd(size)
 
-    # right tree 
     t.rt(angle)
     t.fd(size)
-    SnowFractal(t, size * 0.8, angle, nivel - 1)
+    SnowBranchFractal(t, size * 0.8, angle, nivel - 1)
     t.back(size)
     t.pencolor(0, 255 // nivel, 0)
 
     t.lt(angle)
     t.fd(size)
-    SnowFractal(t, size * 0.8, angle, nivel - 1)
+    SnowBranchFractal(t, size * 0.8, angle, nivel - 1)
     t.back(size)
     t.pencolor(0, 255 // nivel, 0)
 
     t.lt(angle)
     t.fd(size)
-    SnowFractal(t, size * 0.8, angle, nivel - 1)
+    SnowBranchFractal(t, size * 0.8, angle, nivel - 1)
     t.back(size)
     t.pencolor(0, 255 // nivel, 0)
 
     t.lt(-angle)
     t.back(size)
 
-    
 
 
-t.lt(90)
-SnowFractal(t, 80, 30, 20)
+for i in range (4):
+    SnowBranchFractal(t, 80, 30, 20)
+    t.rt(90)
+
+
 
 #estrela(t,size,Pontas)
 
