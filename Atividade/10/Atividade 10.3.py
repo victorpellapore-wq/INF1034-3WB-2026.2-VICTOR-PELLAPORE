@@ -10,7 +10,6 @@ def eixos (screen):
 
     police = pygame.font.Font(None, 25)
 
-
     for i in range(num_cat):
         x = 100 + i * 50
         pygame.draw.line(screen, ("white"), (x, screen_h - 85), (x, screen_h - 75), 2)
@@ -28,17 +27,21 @@ def random_color():
     return (randint(0, 255), randint(0, 255), randint(0, 255))
 cores = [random_color() for i in range(num_cat)]
 
+texte =""
+pantalha_histograma = False
+def desenhar_caixa(screen):
+    screen.blit(police.render("Digite os números separados por espaços :", True, "white"), (50, 200))
+    pygame.draw.rect(screen, "white", (50, 260, 700, 50), 3)
+    screen.blit(police.render(texte, True, "white"), (60, 265))
 
-# primera lista de números aleatórios
-#nums = [randint(0, 100) for i in range(20)]
 
-nums = [int(x) for x in input("Digite números separados por espaços: ").split()]
-
-num_cat = 4
-num_min = min(nums)
-num_max = max(nums)
-tam_cat = (num_max - num_min) / num_cat
-lista_total = [0] * num_cat
+def digit_numeros(numeros):
+    if len(numeros) == 0:
+        return False
+    for a in numeros:
+        if not a.isnumeric():
+            return False
+    return True
 
 
 def contabiliza_totais(nums, lista_total):
@@ -64,7 +67,6 @@ def draw1(screen):
         h = 20 * lista_total[i]
         pygame.draw.rect(screen, cores[i], (x, screen_h - h - 80, 25, h))
 
-contabiliza_totais(nums, lista_total)
 
 
 pygame.init()
@@ -82,12 +84,25 @@ while True:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_BACKSPACE:
-                nums = nums[:-1]
+                texte = texte[:-1]
             elif event.key == pygame.K_RETURN:
-                if nums == nums_validate(texte):
-                    
-
-
-    eixos(screen)
-    draw1(screen)
+                nums = texte.split()
+                if digit_numeros(nums):
+                    nums = [int(x) for x in nums]
+                    num_min = min(nums)
+                    num_max = max(nums)
+                    tam_cat = (num_max - num_min) / num_cat
+                    lista_total = [0] * num_cat
+                    contabiliza_totais(nums, lista_total)
+                    pantalha_histograma = True
+                else:
+                    texte = ""
+            else:
+                texte += event.unicode
+    screen.fill("black")
+    if pantalha_histograma == True:
+        eixos(screen)
+        draw1(screen)
+    else :
+        desenhar_caixa(screen)
     pygame.display.update()
