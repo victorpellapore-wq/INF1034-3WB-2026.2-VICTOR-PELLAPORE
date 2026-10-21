@@ -46,6 +46,19 @@ def eixos (screen):
     pygame.draw.line(screen, ("white"), (75, screen_h - 80), (575, screen_h - 80), 2)
     pygame.draw.line(screen, ("white"), (75, screen_h - 80), (75, 20), 2)
 
+    police = pygame.font.SysFont("Arial", 15)
+
+    for i in range(num_cat):
+        x = 100 + i * 50
+        pygame.draw.line(screen, ("white"), (x, screen_h - 85), (x, screen_h - 75), 2)
+        text = police.render(str(i + 1), True, ("white"))
+        screen.blit(text, (x - 5, screen_h - 70))
+    for i in range(1, num_cat + 1):
+        y = screen_h - 80 - i * 20
+        pygame.draw.line(screen, ("white"), (70, y), (80, y), 2)
+        text1 = police.render(str(i), True, ("white"))
+        screen.blit(text1, (50, y - 5))
+
 
 
 
