@@ -3,18 +3,24 @@ from pygame.locals import QUIT
 from random import randint
 
 # Funcoes Gerais
+# aqui desenho os eixos do histograma como os valores das marcações
 def eixos (screen):
     screen_h = screen.get_height()
+    # Eixos x e y
     pygame.draw.line(screen, ("white"), (75, screen_h - 80), (575, screen_h - 80), 2)
     pygame.draw.line(screen, ("white"), (75, screen_h - 80), (75, 20), 2)
 
     police = pygame.font.Font(None, 25)
 
+    # Aqui eu desenho as marcações e os valores do eixo x
     for i in range(num_cat):
+        # vai ter uma marcação a cada 50 pixels
         x = 100 + i * 50
         pygame.draw.line(screen, ("white"), (x, screen_h - 85), (x, screen_h - 75), 2)
+        # Aqui eu escrevo o valor da marcação (o valor mínimo+ o tamanho da categoria*o índice da categoria), uso o "1f" para formatar o número com uma casa decimal)
         text = police.render(f"{num_min + i * tam_cat:.1f}", True, ("white"))
         screen.blit(text, (x - 5, screen_h - 70))
+    # aqui desenho as marcações e os valores do eixo y, com o mesmo funcionamento
     for i in range(21):
         y = screen_h - 80 - i * 20
         pygame.draw.line(screen, ("white"), (70, y), (80, y), 2)
@@ -23,14 +29,17 @@ def eixos (screen):
 
 num_cat = 4
 
+# Aqui o programa vai escolher a cor querida para cada categoria
 def random_color():
     return (randint(0, 255), randint(0, 255), randint(0, 255))
+# preciso criar uma lista de cores, uma para cada categoria
 cores = [random_color() for i in range(num_cat)]
 
 
 # primera lista de números aleatórios
 nums = [randint(0, 100) for i in range(40)]
 
+# aqui o programa vai calcular o valor minimo, maximo e o tamanho de cada categoria, e criar uma lista com a quantidade de numeros em cada categoria
 num_min = min(nums)
 num_max = max(nums)
 tam_cat = (num_max - num_min) / num_cat
@@ -38,7 +47,7 @@ lista_total = [0] * num_cat
 
 
 def contabiliza_totais(nums, lista_total):
-    # Para cada número na minha lista
+    # aqui o programa vai percorrer a lista de numeros e contar quantos numeros estao em cada categoria,e armazenar essa quantidade na lista total
     for i in range(len(nums)):
         if nums[i] == num_max:
             lista_total[-1] += 1
@@ -53,6 +62,7 @@ def contabiliza_totais(nums, lista_total):
                 break
     return lista_total
 
+#aqui o programa vai desenhar os retangulos do histograma, com a cor da categoria correspondente e o bom tamanho, relacionado a quantidade de numeros em cada categoria
 def draw1(screen):
     screen_h = screen.get_height()
     for i in range(len(lista_total)):
@@ -62,10 +72,10 @@ def draw1(screen):
 
 contabiliza_totais(nums, lista_total)
 
+#esa parte do codigo permite mostrar o histograma em uma janela do pygame, com os eixos e os retangulos desenhados
 pygame.init()
 screen = pygame.display.set_mode((1000, 1000))
 pygame.display.set_caption('Os melhores histogramas!')
-
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
