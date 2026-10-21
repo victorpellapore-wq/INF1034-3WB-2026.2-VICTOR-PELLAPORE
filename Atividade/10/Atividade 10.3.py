@@ -27,14 +27,16 @@ def random_color():
     return (randint(0, 255), randint(0, 255), randint(0, 255))
 cores = [random_color() for i in range(num_cat)]
 
+#aqui o programa cria uma caixa para excrever os numeros ecolhidos pelo utilisator
 texte =""
+#esa variavel permite saber se o programa mostra a caixa para os numeros ou o histograma
 pantalha_histograma = False
 def desenhar_caixa(screen):
     screen.blit(police.render("Digite os números separados por espaços :", True, "white"), (50, 200))
     pygame.draw.rect(screen, "white", (50, 260, 700, 50), 3)
     screen.blit(police.render(texte, True, "white"), (60, 265))
 
-
+#esa parte permite verificar se as informaoes entradas sao numeros
 def digit_numeros(numeros):
     if len(numeros) == 0:
         return False
@@ -45,16 +47,13 @@ def digit_numeros(numeros):
 
 
 def contabiliza_totais(nums, lista_total):
-    # Para cada número na minha lista
     for i in range(len(nums)):
         if nums[i] == num_max:
             lista_total[-1] += 1
             continue
-
         for i_cat in range(num_cat):
             lim_inf = num_min + i_cat * tam_cat
             lim_sup = lim_inf + tam_cat
-
             if lim_inf <= nums[i] < lim_sup:
                 lista_total[i_cat] += 1
                 break
@@ -74,9 +73,11 @@ screen = pygame.display.set_mode((1000, 1000))
 pygame.display.set_caption('Os melhores histogramas!')
 
 police = pygame.font.SysFont("Arial", 40)
+#mostra ao utilisador que fazer
 screen.blit(police.render("Digite números separados por espaços :", True, "White"), (200,400))
 pygame.draw.rect(screen, "white", (200, 500, 600, 50), 3)
 
+#usei a mesma estructura daquela usada para a atividade 8 (login/email)
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -86,7 +87,9 @@ while True:
             if event.key == pygame.K_BACKSPACE:
                 texte = texte[:-1]
             elif event.key == pygame.K_RETURN:
+                #aqui separo os numeros
                 nums = texte.split()
+                #aqui e a introducao das variaveis
                 if digit_numeros(nums):
                     nums = [int(x) for x in nums]
                     num_min = min(nums)
@@ -99,7 +102,7 @@ while True:
                     texte = ""
             else:
                 texte += event.unicode
-    screen.fill("black")
+    #uma vez que o utilisator escolheu o seus numeros, podemos mostrar a pantlha do histograma
     if pantalha_histograma == True:
         eixos(screen)
         draw1(screen)
