@@ -1,85 +1,81 @@
 import pygame, sys
 from pygame.locals import QUIT
-from random import randint
+from random import *
 
+# Funcoes Gerais
+# aqui desenho os eixos do histograma como os valores das marcações
+def eixos (screen):
+    screen_h = screen.get_height()
+    # Eixos x e y
+    pygame.draw.line(screen, ("white"), (75, screen_h - 80), (575, screen_h - 80), 2)
+    pygame.draw.line(screen, ("white"), (75, screen_h - 80), (75, 20), 2)
+
+    police = pygame.font.Font(None, 25)
+
+    # Aqui eu desenho as marcações e os valores do eixo x
+    for i in range(num_cat):
+        # vai ter uma marcação a cada 50 pixels
+        x = 100 + i * 50
+        pygame.draw.line(screen, ("white"), (x, screen_h - 85), (x, screen_h - 75), 2)
+        # Aqui eu escrevo o valor da marcação (o valor mínimo+ o tamanho da categoria*o índice da categoria), uso o "1f" para formatar o número com uma casa decimal)
+        text = police.render(f"{num_min + i * tam_cat:.1f}", True, ("white"))
+        screen.blit(text, (x - 5, screen_h - 70))
+    # aqui desenho as marcações e os valores do eixo y, com o mesmo funcionamento
+    for i in range(21):
+        y = screen_h - 80 - i * 20
+        pygame.draw.line(screen, ("white"), (70, y), (80, y), 2)
+        text1 = police.render(str(i), True, ("white"))
+        screen.blit(text1, (50, y - 5))
 
 num_cat = 4
-texte = ""          # o que o usuário está digitando
-modo = "digitar"    # "digitar" ou "histograma"
+# Aqui o programa vai escolher a cor querida para cada categoria
+def random_color():
+    return (randint(0, 255), randint(0, 255), randint(0, 255))
+# preciso criar uma lista de cores, uma para cada categoria
+cores = [random_color() for i in range(num_cat)]
 
 
+# primera lista de números aleatórios
+nums = [
+    100, 120, 130, 120, 150, 100, 160, 200, 190, 110, 115, 125, 135, 170, 130
+]
+
+# aqui o programa vai calcular o valor minimo, maximo e o tamanho de cada categoria, e criar uma lista com a quantidade de numeros em cada categoria
+num_min = min(nums)
+num_max = max(nums)
+tam_cat = (num_max - num_min) / num_cat
+lista_total = [0] * num_cat
+total = len(nums)
+
+#a unica coisa que mudei é a clasificacao dos numeros ; agora sao clasificados de maneira aleatoria
 def contabiliza_totais(nums, lista_total):
-    # Para cada número na minha lista
-    for i in range(len(nums)):
-        if nums[i] == num_max:
-            lista_total[-1] += 1
-            continue
-
-        # Para cada faixa/categoria
-        for i_cat in range(num_cat):
-            # Obtém os limites inferior e superior
-            lim_inf = num_min + i_cat * tam_cat
-            lim_sup = lim_inf + tam_cat
-
-            # Checa em qual faixa/categoria o número está com base nesses limites
-            if lim_inf <= nums[i] < lim_sup:
-                lista_total[i_cat] += 1
-                break
+    # aqui o programa vai percorrer a lista de numeros e contar quantos numeros estao em cada categoria,e armazenar essa quantidade na lista total
+    restante = total
+    for i in range(len(lista_total)):
+        valor = randint(0, restante)
+        lista_total[i] = valor
+        restante -= valor
     return lista_total
 
-
-def nums_validate(numeros):
-    try:
-        nums = [int(x) for x in numeros.split()]
-        return nums
-    except ValueError:
-        return []
-
-
-def draw(screen):
+#aqui o programa vai desenhar os retangulos do histograma, com a cor da categoria correspondente e o bom tamanho, relacionado a quantidade de numeros em cada categoria
+def draw1(screen):
     screen_h = screen.get_height()
     for i in range(len(lista_total)):
         x = 100 + i * 50
         h = 20 * lista_total[i]
-        pygame.draw.rect(screen, (255, 0, 0), (x, screen_h - h - 80, 25, h))
+        pygame.draw.rect(screen, cores[i], (x, screen_h - h - 80, 25, h))
 
+contabiliza_totais(nums, lista_total)
 
-def draw_caixa(screen):
-    screen.blit(police.render("Digite números separados por espaços :", True, "white"), (50, 200))
-    pygame.draw.rect(screen, "white", (50, 260, 700, 50), 3)
-    screen.blit(police.render(texte, True, "white"), (60, 265))
-
-
+#esa parte do codigo permite mostrar o histograma em uma janela do pygame, com os eixos e os retangulos desenhados
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption('Hello World!')
-police = pygame.font.SysFont("Arial", 32)
-
+screen = pygame.display.set_mode((1000, 1000))
+pygame.display.set_caption('Os melhores histogramas!')
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-        elif event.type == pygame.KEYDOWN and modo == "digitar":
-            if event.key == pygame.K_BACKSPACE:
-                texte = texte[:-1]
-            elif event.key == pygame.K_RETURN:
-                nums = nums_validate(texte)
-                if nums:  # lista válida -> calcula o histograma
-                    num_min = min(nums)
-                    num_max = max(nums)
-                    tam_cat = (num_max - num_min) / num_cat
-                    lista_total = contabiliza_totais(nums, [0] * num_cat)
-                    print(lista_total)
-                    modo = "histograma"
-                else:     # entrada inválida -> apaga e recomeça
-                    texte = ""
-            else:
-                texte += event.unicode
-
-    screen.fill("black")  # apaga o quadro anterior
-    if modo == "digitar":
-        draw_caixa(screen)
-    else:
-        draw(screen)
+    eixos(screen)
+    draw1(screen)
     pygame.display.update()
