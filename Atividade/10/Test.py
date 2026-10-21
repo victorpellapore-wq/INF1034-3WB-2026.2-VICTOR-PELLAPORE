@@ -2,14 +2,10 @@ import pygame, sys
 from pygame.locals import QUIT
 from random import randint
 
-nums = [
-    randint(100, 200) for a in range(50)
-]
+
 num_cat = 4
-num_min = min(nums)
-num_max = max(nums)
-tam_cat = (num_max - num_min) / num_cat
-lista_total = [0] * num_cat
+texte = ""          # o que o usuário está digitando
+modo = "digitar"    # "digitar" ou "histograma"
 
 
 def contabiliza_totais(nums, lista_total):
@@ -32,7 +28,12 @@ def contabiliza_totais(nums, lista_total):
     return lista_total
 
 
-print(contabiliza_totais(nums, lista_total))
+def nums_validate(numeros):
+    try:
+        nums = [int(x) for x in numeros.split()]
+        return nums
+    except ValueError:
+        return []
 
 
 def draw(screen):
@@ -43,13 +44,42 @@ def draw(screen):
         pygame.draw.rect(screen, (255, 0, 0), (x, screen_h - h - 80, 25, h))
 
 
+def draw_caixa(screen):
+    screen.blit(police.render("Digite números separados por espaços :", True, "white"), (50, 200))
+    pygame.draw.rect(screen, "white", (50, 260, 700, 50), 3)
+    screen.blit(police.render(texte, True, "white"), (60, 265))
+
+
 pygame.init()
-screen = pygame.display.set_mode((400, 300))
+screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption('Hello World!')
+police = pygame.font.SysFont("Arial", 32)
+
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-    draw(screen)
+        elif event.type == pygame.KEYDOWN and modo == "digitar":
+            if event.key == pygame.K_BACKSPACE:
+                texte = texte[:-1]
+            elif event.key == pygame.K_RETURN:
+                nums = nums_validate(texte)
+                if nums:  # lista válida -> calcula o histograma
+                    num_min = min(nums)
+                    num_max = max(nums)
+                    tam_cat = (num_max - num_min) / num_cat
+                    lista_total = contabiliza_totais(nums, [0] * num_cat)
+                    print(lista_total)
+                    modo = "histograma"
+                else:     # entrada inválida -> apaga e recomeça
+                    texte = ""
+            else:
+                texte += event.unicode
+
+    screen.fill("black")  # apaga o quadro anterior
+    if modo == "digitar":
+        draw_caixa(screen)
+    else:
+        draw(screen)
     pygame.display.update()
