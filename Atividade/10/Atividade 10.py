@@ -6,7 +6,7 @@ from random import randint
 nums = [
     randint(0, 100) for a in range(50)
 ]
-num_cat = 10
+num_cat = 5
 num_min = min(nums)
 num_max = max(nums)
 tam_cat = (num_max - num_min) / num_cat
@@ -51,9 +51,9 @@ def eixos (screen):
     for i in range(num_cat):
         x = 100 + i * 50
         pygame.draw.line(screen, ("white"), (x, screen_h - 85), (x, screen_h - 75), 2)
-        text = police.render(str(i + 1), True, ("white"))
+        text = police.render(f"{num_min + i * tam_cat:.1f}", True, ("white"))
         screen.blit(text, (x - 5, screen_h - 70))
-    for i in range(1, num_cat + 1):
+    for i in range(21):
         y = screen_h - 80 - i * 20
         pygame.draw.line(screen, ("white"), (70, y), (80, y), 2)
         text1 = police.render(str(i), True, ("white"))
