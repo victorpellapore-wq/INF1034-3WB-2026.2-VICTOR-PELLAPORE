@@ -3,28 +3,15 @@ from pygame.locals import QUIT, KEYDOWN
 
 clock = pygame.time.Clock()
 
+#tive um problema para acesar os meus documentos, entao criou isso
 DOSSIER=os.path.dirname(os.path.abspath(__file__))
 
 Laype_img = pygame.image.load(os.path.join(DOSSIER, "Laype.png"))
 
-
-# hero_walk_list = [
-#     pygame.image.load("assets/assets/Hero_Walk_01.png"),
-#     pygame.image.load("assets/assets/Hero_Walk_02.png"),
-#     pygame.image.load("assets/assets/Hero_Walk_03.png"),
-#     pygame.image.load("assets/assets/Hero_Walk_04.png")
-# ]
-
 curr_frame = 0
 anim_time = 0
-monstre_walk_list = []
-# for i in range(4):
-#     hero_walk_list.append(pygame.image.load(os.path.join(DOSSIER, f"Hero_Walk_0{i+1}.png")))
-monstre_spritesheet = pygame.image.load(os.path.join(DOSSIER, "monstre_walk.png"))
-for i in range(4):
-    #usei a IA para saber como separar cada uma das fotos
-    monstre_walk_list.append(monstre_spritesheet.subsurface((96*i, 0, 96, 96)))
 
+monstre_spritesheet = pygame.image.load(os.path.join(DOSSIER, "monstre_walk.png"))
 
 run_animation = False
 curr_frame_mm = 0
@@ -33,7 +20,7 @@ megaman_spritesheet = pygame.image.load(os.path.join(DOSSIER, "megaman_spriteshe
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption('Hello World!')
+pygame.display.set_caption('Atividade 11!')
 
 while True:
     for event in pygame.event.get():
@@ -41,7 +28,7 @@ while True:
             pygame.quit()
             sys.exit()
         if event.type == KEYDOWN:
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.K_RETURN:
                 run_animation = True
 
     clock.tick(60)
@@ -52,18 +39,14 @@ while True:
 
     if anim_time_sec > 0.15:
         curr_frame = curr_frame + 1
-        # curr_frame += 1
-        if curr_frame > len(monstre_walk_list) -1:
+        if curr_frame > 3:
             curr_frame = 0
         anim_time = 0
-    
     if run_animation:
         anim_time_mm = anim_time_mm + dt
         anim_time_mm_sec = anim_time_mm/1000
-
         if anim_time_mm_sec > 0.1:
             curr_frame_mm = curr_frame_mm + 1
-            # curr_frame_mm += 1
             if curr_frame_mm > 9:
                 curr_frame_mm = 0
                 run_animation = False
@@ -73,7 +56,7 @@ while True:
     screen.fill((255,255,255))
 
     screen.blit(Laype_img, (10, 0))
-    screen.blit(monstre_walk_list[curr_frame], (0, 0))
+    screen.blit(monstre_spritesheet, (0, 0), (96*curr_frame, 0, 96, 96))
 
     # if curr_frame_mm < 5:
     #     screen.blit(megaman_spritesheet, (200, 200), (60 * curr_frame_mm, 0, 60, 60))
