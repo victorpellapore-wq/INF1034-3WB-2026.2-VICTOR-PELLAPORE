@@ -16,6 +16,11 @@ Attack1 = pygame.image.load(os.path.join(DOSSIER, "Attack1.png"))
 Walk = pygame.image.load(os.path.join(DOSSIER, "Walk.png"))
 Walk_espelho = pygame.transform.flip(Walk, True, False)
 
+monstre_direita = pygame.transform.flip(monstre_spritesheet, True, False)
+monstre_direita.fill((255, 100, 100), special_flags=pygame.BLEND_RGB_MULT)
+monstre_direita_x = 0
+monstre_direita_ativo = False
+
 
 
 run_animation = False
@@ -36,6 +41,8 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == KEYDOWN and event.key == pygame.K_d:
+            monstre_direita_ativo = True
     keys = pygame.key.get_pressed()
     if keys[pygame.K_RETURN]:
         run_animation = True
@@ -51,6 +58,11 @@ while True:
         centre[0] = 10
     if centre[0]>= 700:
         centre[0] = 700
+
+    if monstre_direita_ativo:
+        monstre_direita_x += 3
+        if monstre_direita_x > 800:
+            monstre_direita_x = -96
 
     clock.tick(60)
     dt = clock.get_time()
@@ -89,8 +101,12 @@ while True:
     screen.blit(monstre_spritesheet, (0, 0), (96*curr_frame, 0, 96, 96))
     screen.blit(Attack1, (200, 200), (96*curr_frame_att, 0, 96, 96))
     if direçao == "esquerda":
-        screen.blit(Walk, centre, (96*curr_frame_walk, 0, 96, 96))
+        screen.blit(Walk, centre, (96*curr_frame_walk, 0, 96,96))
     else:
-        screen.blit(Walk_espelho, centre, (96*(5 - curr_frame_walk), 0, 96, 96))
+        screen.blit(Walk_espelho,centre,(96*(5- curr_frame_walk), 0, 96, 96))
+    if monstre_direita_ativo:
+        screen.blit(monstre_direita, (monstre_direita_x, 100),(96*(3 -curr_frame),0, 96,96))
+    else:
+        screen.blit(monstre_direita, (monstre_direita_x, 100),(96*3,0, 96, 96))
 
     pygame.display.update()
