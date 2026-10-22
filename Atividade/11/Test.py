@@ -3,7 +3,7 @@ from pygame.locals import QUIT, KEYDOWN
 
 clock = pygame.time.Clock()
 
-dog_img = pygame.image.load("chiens-funnyanimals.gif")
+dog_img = pygame.image.load("/Users/victorpellapore/Desktop/INF1034-3WB-2026.2-VICTOR-PELLAPORE/Atividade/11/chiens-funnyanimals.gif")
 
 hero_img = pygame.image.load("assets/assets/Hero_Walk_01.png")
 
