@@ -84,10 +84,7 @@ while True:
                 walk_animation = False
             anim_time_walk = 0
 
-
-    
     screen.fill((255,255,255))
-
     screen.blit(Laype_img, (500, 300))
     screen.blit(monstre_spritesheet, (0, 0), (96*curr_frame, 0, 96, 96))
     screen.blit(Attack1, (200, 200), (96*curr_frame_att, 0, 96, 96))
@@ -95,17 +92,5 @@ while True:
         screen.blit(Walk, centre, (96*curr_frame_walk, 0, 96, 96))
     else:
         screen.blit(Walk_espelho, centre, (96*(5 - curr_frame_walk), 0, 96, 96))
-
-
-
-
-
-
-    # if curr_frame_mm < 5:
-    #     screen.blit(megaman_spritesheet, (200, 200), (60 * curr_frame_mm, 0, 60, 60))
-    # else:
-    #     screen.blit(megaman_spritesheet, (200, 200), (60 * (curr_frame_mm - 5), 60, 60, 60))
-    
-    #screen.blit(megaman_spritesheet, (200, 200), (60*(curr_frame_mm%5), 60*(curr_frame_mm//5), 60, 60))
 
     pygame.display.update()
