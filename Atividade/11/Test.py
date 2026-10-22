@@ -13,10 +13,15 @@ anim_time = 0
 
 monstre_spritesheet = pygame.image.load(os.path.join(DOSSIER, "monstre_walk.png"))
 Attack1 = pygame.image.load(os.path.join(DOSSIER, "Attack1.png"))
+Walk = pygame.image.load(os.path.join(DOSSIER, "Walk.png"))
+
 
 run_animation = False
+walk_animation = False
+curr_frame_walk = 0
 curr_frame_att = 0
 anim_time_att = 0
+anim_time_walk = 0
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
@@ -31,6 +36,26 @@ while True:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_RETURN]:
         run_animation = True
+
+    centre = [100, 100]
+    if keys[pygame.K_LEFT] or keys[pygame.K_RIGHT] or keys[pygame.K_UP] or keys[pygame.K_DOWN]:
+        walk_animation = True
+    if keys[pygame.K_LEFT]:
+        centre[0]-=5
+    if keys[pygame.K_RIGHT]:
+        centre[0]+=5
+    if keys[pygame.K_UP]:
+        centre[1]-=5
+    if keys[pygame.K_DOWN]:
+        centre[1]+=5
+    if centre[0]<= 100:
+        centre[0] = 100
+    if centre[0]>= 700:
+        centre[0] = 700
+    if centre[1]<= 100:
+        centre[1] = 100
+    if centre[1]>= 500:
+        centre[1] = 500
 
     clock.tick(60)
     dt = clock.get_time()
@@ -52,14 +77,24 @@ while True:
             if curr_frame_att > 5:
                 curr_frame_att = 0
                 run_animation = False
+        anim_time_walk = anim_time_walk + dt
+        anim_time_att_sec = anim_time_att/1000
+        if anim_time_att_sec > 0.1:
+            curr_frame_walk = curr_frame_walk+ 1
+            if curr_frame_walk > 5:
+                curr_frame_walk = 0
+                walk_animation = False
             anim_time_att = 0
+        
 
-    # Desenho dos elementos na tela
+    
     screen.fill((255,255,255))
 
     screen.blit(Laype_img, (500, 300))
     screen.blit(monstre_spritesheet, (0, 0), (96*curr_frame, 0, 96, 96))
     screen.blit(Attack1, (200, 200), (96*curr_frame_att, 0, 96, 96))
+    screen.blit(Walk, (400,300), (96*curr_frame_walk, 0, 96, 96))
+
 
 
     # if curr_frame_mm < 5:
