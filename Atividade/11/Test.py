@@ -1,11 +1,13 @@
-import pygame, sys
+import pygame, sys, os
 from pygame.locals import QUIT, KEYDOWN
 
 clock = pygame.time.Clock()
 
-dog_img = pygame.image.load("/Users/victorpellapore/Desktop/INF1034-3WB-2026.2-VICTOR-PELLAPORE/Atividade/11/chiens-funnyanimals.gif")
+DOSSIER=os.path.dirname(os.path.abspath(__file__))
 
-hero_img = pygame.image.load("assets/assets/Hero_Walk_01.png")
+dog_img = pygame.image.load(os.path.join(DOSSIER, "chiens-funnyanimals.gif"))
+
+hero_img = pygame.image.load(os.path.join(DOSSIER, "Hero_Walk_01.png"))
 
 # hero_walk_list = [
 #     pygame.image.load("assets/assets/Hero_Walk_01.png"),
@@ -17,14 +19,18 @@ hero_img = pygame.image.load("assets/assets/Hero_Walk_01.png")
 curr_frame = 0
 anim_time = 0
 hero_walk_list = []
+# for i in range(4):
+#     hero_walk_list.append(pygame.image.load(os.path.join(DOSSIER, f"Hero_Walk_0{i+1}.png")))
+monstre_spritesheet = pygame.image.load(os.path.join(DOSSIER, "monstre_walk.png"))
 for i in range(4):
-    hero_walk_list.append(pygame.image.load(f"assets/assets/Hero_Walk_0{i+1}.png"))
+    #usei a IA para saber como separar cada uma das fotos
+    hero_walk_list.append(monstre_spritesheet.subsurface((96*i, 0, 96, 96)))
 
 
 run_animation = False
 curr_frame_mm = 0
 anim_time_mm = 0
-megaman_spritesheet = pygame.image.load("megaman_spritesheet.png")
+megaman_spritesheet = pygame.image.load(os.path.join(DOSSIER, "megaman_spritesheet.png"))
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
