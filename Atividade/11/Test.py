@@ -5,9 +5,8 @@ clock = pygame.time.Clock()
 
 DOSSIER=os.path.dirname(os.path.abspath(__file__))
 
-dog_img = pygame.image.load(os.path.join(DOSSIER, "chiens-funnyanimals.gif"))
+Laype_img = pygame.image.load(os.path.join(DOSSIER, "Laype.png"))
 
-hero_img = pygame.image.load(os.path.join(DOSSIER, "Hero_Walk_01.png"))
 
 # hero_walk_list = [
 #     pygame.image.load("assets/assets/Hero_Walk_01.png"),
@@ -18,13 +17,13 @@ hero_img = pygame.image.load(os.path.join(DOSSIER, "Hero_Walk_01.png"))
 
 curr_frame = 0
 anim_time = 0
-hero_walk_list = []
+monstre_walk_list = []
 # for i in range(4):
 #     hero_walk_list.append(pygame.image.load(os.path.join(DOSSIER, f"Hero_Walk_0{i+1}.png")))
 monstre_spritesheet = pygame.image.load(os.path.join(DOSSIER, "monstre_walk.png"))
 for i in range(4):
     #usei a IA para saber como separar cada uma das fotos
-    hero_walk_list.append(monstre_spritesheet.subsurface((96*i, 0, 96, 96)))
+    monstre_walk_list.append(monstre_spritesheet.subsurface((96*i, 0, 96, 96)))
 
 
 run_animation = False
@@ -54,7 +53,7 @@ while True:
     if anim_time_sec > 0.15:
         curr_frame = curr_frame + 1
         # curr_frame += 1
-        if curr_frame > len(hero_walk_list) -1:
+        if curr_frame > len(monstre_walk_list) -1:
             curr_frame = 0
         anim_time = 0
     
@@ -73,8 +72,8 @@ while True:
     # Desenho dos elementos na tela
     screen.fill((255,255,255))
 
-    # screen.blit(dog_img, (0, 0))
-    screen.blit(hero_walk_list[curr_frame], (0, 0))
+    screen.blit(Laype_img, (10, 0))
+    screen.blit(monstre_walk_list[curr_frame], (0, 0))
 
     # if curr_frame_mm < 5:
     #     screen.blit(megaman_spritesheet, (200, 200), (60 * curr_frame_mm, 0, 60, 60))
