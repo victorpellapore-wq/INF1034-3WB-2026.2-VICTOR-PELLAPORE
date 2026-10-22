@@ -27,9 +27,10 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == KEYDOWN:
-            if event.key == pygame.K_RETURN:
-                run_animation = True
+    #alterei a linha de codigo seguinte para que se atualize o estado do teclado
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_RETURN]:
+        run_animation = True
 
     clock.tick(60)
     dt = clock.get_time()
