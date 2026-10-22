@@ -41,9 +41,9 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == KEYDOWN and event.key == pygame.K_d:
-            monstre_direita_ativo = True
     keys = pygame.key.get_pressed()
+    if keys[pygame.K_d]:
+            monstre_direita_ativo =True
     if keys[pygame.K_RETURN]:
         run_animation = True
     if keys[pygame.K_LEFT]:
