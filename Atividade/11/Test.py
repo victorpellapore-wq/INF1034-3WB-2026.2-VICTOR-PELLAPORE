@@ -19,13 +19,13 @@ Walk_espelho = pygame.transform.flip(Walk, True, False)
 
 
 run_animation = False
-walk_lt_animation = False
-walk_rt_animation = False
-curr_frame_walk_lt = 0
+walk_animation = False
+curr_frame_walk = 0
+direçao = "esquerda"
 curr_frame_att = 0
 anim_time_att = 0
 anim_time_walk = 0
-centre = [100, 100]
+centre = [100, 300]
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
@@ -36,21 +36,21 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-    #alterei a linha de codigo seguinte para que se atualize o estado do teclado
     keys = pygame.key.get_pressed()
     if keys[pygame.K_RETURN]:
         run_animation = True
-
     if keys[pygame.K_LEFT]:
-        walk_lt_animation = True
         centre[0]-=5
+        walk_animation = True
+        direçao = "esquerda"
     if keys[pygame.K_RIGHT]:
         centre[0]+=5
-        walk_rt_animation = True
+        walk_animation = True
+        direçao = "direita"
     if centre[0]<= 10:
         centre[0] = 10
-    if centre[0]>= 790:
-        centre[0] = 790
+    if centre[0]>= 700:
+        centre[0] = 700
 
     clock.tick(60)
     dt = clock.get_time()
@@ -74,26 +74,16 @@ while True:
                 run_animation = False
             anim_time_att = 0
     
-    if walk_lt_animation:
+    if walk_animation:
         anim_time_walk = anim_time_walk + dt
         anim_time_walk_sec = anim_time_walk/1000
         if anim_time_walk_sec > 0.1:
-            curr_frame_walk_lt = curr_frame_walk_lt + 1
-            if curr_frame_walk_lt > 5:
-                curr_frame_walk_lt = 0
-                walk_lt_animation = False
+            curr_frame_walk = curr_frame_walk + 1
+            if curr_frame_walk > 5:
+                curr_frame_walk = 0
+                walk_animation = False
             anim_time_walk = 0
 
-    if walk_rt_animation:
-            anim_time_walk = anim_time_walk + dt
-            anim_time_walk_sec = anim_time_walk/1000
-            if anim_time_walk_sec > 0.1:
-                curr_frame_walk_rt = curr_frame_walk_rt + 1
-                if curr_frame_walk_rt > 5:
-                    curr_frame_walk_rt = 0
-                    walk_rt_animation = False
-                anim_time_walk = 0
-        
 
     
     screen.fill((255,255,255))
@@ -101,10 +91,10 @@ while True:
     screen.blit(Laype_img, (500, 300))
     screen.blit(monstre_spritesheet, (0, 0), (96*curr_frame, 0, 96, 96))
     screen.blit(Attack1, (200, 200), (96*curr_frame_att, 0, 96, 96))
-    if walk_lt_animation :
-        screen.blit(Walk, (centre[0],300), (96*curr_frame_walk_lt, 0, 96, 96))
+    if direçao == "esquerda":
+        screen.blit(Walk, centre, (96*curr_frame_walk, 0, 96, 96))
     else:
-        screen.blit(Walk_espelho, (centre[0], 200), (96*(5 - curr_frame_att), 0, 96, 96))
+        screen.blit(Walk_espelho, centre, (96*(5 - curr_frame_walk), 0, 96, 96))
 
 
 
