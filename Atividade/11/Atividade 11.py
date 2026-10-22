@@ -1,87 +1,110 @@
-from pygame import *
-import math
+import pygame, sys, os
+from pygame.locals import QUIT, KEYDOWN
 
-init()
-screen = display.set_mode((1000,800))
+clock = pygame.time.Clock()
 
-#recursos
-scooby_imagem = image.load("Atividade/5/scooby.png")
-scooby_imagem = transform.scale(scooby_imagem, (200,200))
-scooby_fonte= font.Font("Atividade/5/AlienBlock-Regular.ttf", 30)
+#tive um problema para acesar os meus documentos, entao criou isso
+DOSSIER=os.path.dirname(os.path.abspath(__file__))
 
+Laype_img = pygame.image.load(os.path.join(DOSSIER, "Laype.png"))
 
-def lignes_autour_cercle(screen, centre, rayon, nombre):
-    for i in range(nombre):
-        angle = i * 360 / nombre
-        x = centre[0]+rayon*math.cos(math.radians(angle))
-        y = centre[1]+rayon*math.sin(math.radians(angle))
-        draw.line(screen, "#FFF251", centre, (x, y), 8)
-        draw.circle(screen, "#FFF251", centre, 4)
-        draw.circle(screen, "#FFF251", (x, y), 4)
+curr_frame = 0
+anim_time = 0
 
-clock = time.Clock()
-centre = [100, 100]
+monstre_spritesheet = pygame.image.load(os.path.join(DOSSIER, "monstre_walk.png"))
+Attack1 = pygame.image.load(os.path.join(DOSSIER, "Attack1.png"))
+Walk = pygame.image.load(os.path.join(DOSSIER, "Walk.png"))
+Walk_espelho = pygame.transform.flip(Walk, True, False)
 
+monstre_direita = pygame.transform.flip(monstre_spritesheet, True, False)
+monstre_direita.fill((255, 100, 100), special_flags=pygame.BLEND_RGB_MULT)
+monstre_direita_x = 0
+monstre_direita_ativo = False
 
-x=500
-speed=1
+run_animation = False
+walk_animation = False
+curr_frame_walk = 0
+direçao = "esquerda"
+curr_frame_att = 0
+anim_time_att = 0
+anim_time_walk = 0
+centre = [100, 300]
 
-running = True
-while running:
-    clock.tick(60)
-    touches = key.get_pressed()
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+pygame.display.set_caption('Atividade 11!')
 
-    for ev in event.get():
-        if ev.type == QUIT:
-            running = False
-        if ev.type == MOUSEMOTION:
-             centre[0], centre[1] = ev.pos
-             if centre[0]<= 100:
-                    centre[0] = 100
-             if centre[0]>= 700:
-                    centre[0] = 700
-             if centre[1]<= 100:
-                    centre[1] = 100
-             if centre[1]>= 500:
-                    centre[1] = 500
-
-
-    screen.fill("#87CEEB")
-    draw.circle(screen, "#FFF251", centre,50)
-    lignes_autour_cercle(screen,centre,100,8)
-
-    
-    if touches[K_LEFT]:
+while True:
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_d]:
+            monstre_direita_ativo =True
+    if keys[pygame.K_RETURN]:
+        run_animation = True
+    if keys[pygame.K_LEFT]:
         centre[0]-=5
-    if touches[K_RIGHT]:
+        walk_animation = True
+        direçao = "esquerda"
+    if keys[pygame.K_RIGHT]:
         centre[0]+=5
-    if touches[K_UP]:
-        centre[1]-=5
-    if touches[K_DOWN]:
-        centre[1]+=5
-    if centre[0]<= 100:
-        centre[0] = 100
+        walk_animation = True
+        direçao = "direita"
+    if centre[0]<= 10:
+        centre[0] = 10
     if centre[0]>= 700:
         centre[0] = 700
-    if centre[1]<= 100:
-        centre[1] = 100
-    if centre[1]>= 500:
-        centre[1] = 500
 
+    if monstre_direita_ativo:
+        monstre_direita_x += 3
+        if monstre_direita_x > 800:
+            monstre_direita_x = -96
 
-    x += speed
-    if x >= 600:
-        speed = -1
-    if x <= 50:
-        speed = 1
+    clock.tick(60)
+    dt = clock.get_time()
+
+    anim_time = anim_time + dt
+    anim_time_sec = anim_time/1000
+
+    if anim_time_sec > 0.15:
+        curr_frame = curr_frame + 1
+        if curr_frame > 3:
+            curr_frame = 0
+        anim_time = 0
+
+    if run_animation:
+        anim_time_att = anim_time_att + dt
+        anim_time_att_sec = anim_time_att/1000
+        if anim_time_att_sec > 0.1:
+            curr_frame_att = curr_frame_att+ 1
+            if curr_frame_att > 5:
+                curr_frame_att = 0
+                run_animation = False
+            anim_time_att = 0
     
-    draw.circle(screen, "white", (x,100),50)
-    draw.circle(screen, "white", (x+50,100),50)
-    draw.circle(screen, "white", (x+100,100),50)
-    draw.circle(screen, "white", (x+150,100),50)
+    if walk_animation:
+        anim_time_walk = anim_time_walk + dt
+        anim_time_walk_sec = anim_time_walk/1000
+        if anim_time_walk_sec > 0.1:
+            curr_frame_walk = curr_frame_walk + 1
+            if curr_frame_walk > 5:
+                curr_frame_walk = 0
+                walk_animation = False
+            anim_time_walk = 0
 
-    screen.blit(scooby_imagem,(400,400))
+    screen.fill((255,255,255))
+    screen.blit(Laype_img, (500, 300))
+    screen.blit(monstre_spritesheet, (0, 0), (96*curr_frame, 0, 96, 96))
+    screen.blit(Attack1, (200, 200), (96*curr_frame_att, 0, 96, 96))
+    if direçao == "esquerda":
+        screen.blit(Walk, centre, (96*curr_frame_walk, 0, 96,96))
+    else:
+        screen.blit(Walk_espelho,centre,(96*(5- curr_frame_walk), 0, 96, 96))
+    if monstre_direita_ativo:
+        screen.blit(monstre_direita, (monstre_direita_x, 100),(96*(3 -curr_frame),0, 96,96))
+    else:
+        screen.blit(monstre_direita, (monstre_direita_x, 100),(96*3,0, 96, 96))
 
-
-    display.update()
-
+    pygame.display.update()
