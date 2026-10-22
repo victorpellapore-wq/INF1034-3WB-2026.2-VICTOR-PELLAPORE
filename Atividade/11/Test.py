@@ -42,6 +42,7 @@ while True:
         if curr_frame > 3:
             curr_frame = 0
         anim_time = 0
+
     if run_animation:
         anim_time_mm = anim_time_mm + dt
         anim_time_mm_sec = anim_time_mm/1000
@@ -55,8 +56,10 @@ while True:
     # Desenho dos elementos na tela
     screen.fill((255,255,255))
 
-    screen.blit(Laype_img, (10, 0))
+    screen.blit(Laype_img, (800, -300))
     screen.blit(monstre_spritesheet, (0, 0), (96*curr_frame, 0, 96, 96))
+    screen.blit(monstre_spritesheet, (0, 0), (96*curr_frame, 0, 96, 96))
+
 
     # if curr_frame_mm < 5:
     #     screen.blit(megaman_spritesheet, (200, 200), (60 * curr_frame_mm, 0, 60, 60))
