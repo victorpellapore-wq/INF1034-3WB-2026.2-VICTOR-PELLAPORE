@@ -48,10 +48,10 @@ mapa_joguinho = [
   "XXXXXXXXXXXXXX",
   "XXXXXKXXXXXXCX",
   "XXIXEGDIYEGGGG",
-  "VXXXQUWXYQUUUU",
-  "GDOXXHXXYFHHJM",
-  "TTDZXXXXYBSSJM",
-  "TTTDNNNEGGGGGG",
+  "VXXXQUWXYQUUTT",
+  "GDOXXHXXYFHHLT",
+  "TTDZXXXXYBSSLT",
+  "TTTDNNNEGGGGTT",
   "TTTRAAALTTTTTT",
   "TTTRPPPLTTTTTT",
 ]
@@ -88,7 +88,7 @@ while True:
 
     pygame.draw.rect(screen, (255, 0, 0), (pos_x, pos_y, 64, 64))
     pygame.draw.rect(screen, (0, 0, 255), collider_jogador, 2)
-    
+
     for i in range(len(mapa_joguinho)): # Para cada linha
         for j in range(len(mapa_joguinho[i])): # Para cada coluna (letra)
             letra = mapa_joguinho[i][j]
