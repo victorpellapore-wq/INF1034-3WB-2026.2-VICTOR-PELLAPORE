@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame, sys, os
 from pygame.locals import QUIT
 
 pygame.init()
@@ -7,7 +7,8 @@ pygame.display.set_caption('Hello World!')
 clock = pygame.time.Clock()
 tile_size = 60
 tile_size_joguinho = 64
-tileset = pygame.image.load("plataform_tileset.png")
+pasta_do_script = os.path.dirname(os.path.abspath(__file__))
+tileset = pygame.image.load(os.path.join(pasta_do_script, "tileset_3x3.png"))
 collider_caixa = pygame.Rect(0, 0, 0, 0)
 can_walk = True
 
