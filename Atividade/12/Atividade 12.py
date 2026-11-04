@@ -7,7 +7,7 @@ pygame.display.set_caption('Hello World!')
 clock = pygame.time.Clock()
 tile_size = 60
 tile_size_joguinho = 64
-# tileset = pygame.image.load("plataform_tileset.png")
+tileset = pygame.image.load("plataform_tileset.png")
 collider_caixa = pygame.Rect(0, 0, 0, 0)
 can_walk = True
 
@@ -51,24 +51,24 @@ while True:
     old_pos_x = pos_x
     old_pos_y = pos_y
 
-    # keys = pygame.key.get_pressed()
+    keys = pygame.key.get_pressed()
 
-    # if keys[pygame.K_RIGHT]:
-    #     pos_x = pos_x + 0.1*dt
-    # elif keys[pygame.K_LEFT]:
-    #     pos_x = pos_x - 0.1*dt
-    # elif keys[pygame.K_UP]:
-    #     pos_y = pos_y - 0.1*dt
-    # elif keys[pygame.K_DOWN]:
-    #     pos_y = pos_y + 0.1*dt
+    if keys[pygame.K_RIGHT]:
+        pos_x = pos_x + 0.1*dt
+    elif keys[pygame.K_LEFT]:
+        pos_x = pos_x - 0.1*dt
+    elif keys[pygame.K_UP]:
+        pos_y = pos_y - 0.1*dt
+    elif keys[pygame.K_DOWN]:
+        pos_y = pos_y + 0.1*dt
 
-    # screen.fill((152,209,250))
+    screen.fill((152,209,250))
 
-    # collider_jogador = pygame.Rect(pos_x, pos_y, 64, 64)
+    collider_jogador = pygame.Rect(pos_x, pos_y, 64, 64)
 
     if collider_jogador.colliderect(collider_caixa):
-    #     pos_x = old_pos_x
-    #     pos_y = old_pos_y
+        pos_x = old_pos_x
+        pos_y = old_pos_y
 
     pygame.draw.rect(screen, (255, 0, 0), (pos_x, pos_y, 64, 64))
     pygame.draw.rect(screen, (0, 0, 255), collider_jogador, 2)
