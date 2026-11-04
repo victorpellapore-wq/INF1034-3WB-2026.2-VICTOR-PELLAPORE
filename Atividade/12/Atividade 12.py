@@ -2,43 +2,58 @@ import pygame, sys, os
 from pygame.locals import QUIT
 
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((896, 640)) #14 x10 tiles de 64 px
 pygame.display.set_caption('Hello World!')
 clock = pygame.time.Clock()
 tile_size = 60
 tile_size_joguinho = 64
 pasta_do_script = os.path.dirname(os.path.abspath(__file__))
-tileset = pygame.image.load(os.path.join(pasta_do_script, "tileset_3x3.png"))
+tileset = pygame.image.load(os.path.join(pasta_do_script, "tileset_neige_5x5.png"))
 collider_caixa = pygame.Rect(0, 0, 0, 0)
 can_walk = True
 
 pos_x = 0
 pos_y = 0
 
-mapa = [
-  "GGGGGGAGGGGGGG",
-  "GGGGGGAGGGGGGG",
-  "GGGGGGAGGGGGGG",
-  "GGGGGGAGGGGGGG",
-  "GGGGGGAAAGGGGG",
-  "GGGGGGGGAGGGGG",
-  "GGGGGGGGAGGGGG",
-  "PPPPPPPPAPPPPP",
-  "AAAAAAAAAAAAAA",
-  "AAAAAAAAAAAAAA",
-]
+tiles = {
+    "E": (0, 0),
+    "G": (1, 0),
+    "D": (2, 0),
+    "I": (3, 0),
+    "H": (4, 0),
+    "L": (0, 1),
+    "T": (1, 1),
+    "R": (2, 1),
+    "A": (3, 1),
+    "P": (4, 1),
+    "Q": (0, 2),
+    "U": (1, 2), 
+    "W": (2, 2),
+    "N": (3, 2), 
+    "Y": (4, 2),
+    "S": (0, 3),
+    "C": (1, 3),
+    "B": (2, 3),
+    "K": (3, 3), 
+    "F": (4, 3),
+    "V": (0, 4), 
+    "O": (1, 4), 
+    "M": (2, 4), 
+    "Z": (3, 4), 
+    "J": (4, 4),
+}
 
 mapa_joguinho = [
   "XXXXXXXXXXXXXX",
   "XXXXXXXXXXXXXX",
-  "XXXXXXXXXXGGGX",
-  "XXXXXXXXXXXXXX",
-  "XXXXGGGXXXXXXX",
-  "XXXXXXXXXXXXXX",
-  "GGXXXXXXXXXBXX",
-  "TTGGAAAGGGGGGG",
-  "TTTTPPPTTTTTTT",
-  "TTTTPPPTTTTTTT",
+  "XXXXXKXXXXXXCX",
+  "XXIXEGDIYEGGGG",
+  "VXXXQUWXYQUUUU",
+  "GDOXXHXXYFHHJM",
+  "TTDZXXXXYBSSJM",
+  "TTTDNNNEGGGGGG",
+  "TTTRAAALTTTTTT",
+  "TTTRPPPLTTTTTT",
 ]
 
 while True:
@@ -74,30 +89,15 @@ while True:
     pygame.draw.rect(screen, (255, 0, 0), (pos_x, pos_y, 64, 64))
     pygame.draw.rect(screen, (0, 0, 255), collider_jogador, 2)
     
-    ## Primeiro mapa
-    # for i in range(len(mapa)): # Para cada linha
-    #     for j in range(len(mapa[i])): # Para cada coluna (letra)
-    #         if mapa[i][j] == "G":
-    #             pygame.draw.rect(screen, (39,153,0), (tile_size*j, tile_size*i, tile_size, tile_size))
-    #         elif mapa[i][j] == "P":
-    #             pygame.draw.rect(screen, (230,235,134), (tile_size*j, tile_size*i, tile_size, tile_size))
-    #         elif mapa[i][j] == "A":
-    #             pygame.draw.rect(screen, (63,125,232), (tile_size*j, tile_size*i, tile_size, tile_size))
-
     for i in range(len(mapa_joguinho)): # Para cada linha
         for j in range(len(mapa_joguinho[i])): # Para cada coluna (letra)
-            if mapa_joguinho[i][j] == "G":
-                screen.blit(tileset, (j * tile_size_joguinho, i * tile_size_joguinho), (0, 0, tile_size_joguinho, tile_size_joguinho))
-            elif mapa_joguinho[i][j] == "T":
-                screen.blit(tileset, (j * tile_size_joguinho, i * tile_size_joguinho), (64, 0, tile_size_joguinho, tile_size_joguinho))
-            elif mapa_joguinho[i][j] == "A":
-                screen.blit(tileset, (j * tile_size_joguinho, i * tile_size_joguinho), (128, 0, tile_size_joguinho, tile_size_joguinho))
-            elif mapa_joguinho[i][j] == "B":
-                screen.blit(tileset, (j * tile_size_joguinho, i * tile_size_joguinho), (0, 128, tile_size_joguinho, tile_size_joguinho))
+            letra = mapa_joguinho[i][j]
+            if letra in tiles:
+                coluna, linha = tiles[letra]
+                screen.blit(tileset, (j * tile_size_joguinho, i * tile_size_joguinho), (coluna * tile_size_joguinho, linha * tile_size_joguinho, tile_size_joguinho, tile_size_joguinho))
+            if letra == "B":
                 collider_caixa = pygame.Rect(j * tile_size_joguinho, i * tile_size_joguinho, 64, 64)
                 pygame.draw.rect(screen, (0, 0, 255), collider_caixa, 2)
-            elif mapa_joguinho[i][j] == "P":
-                screen.blit(tileset, (j * tile_size_joguinho, i * tile_size_joguinho), (128, 64, tile_size_joguinho, tile_size_joguinho))
     
 
     pygame.display.update()
