@@ -20,14 +20,13 @@ direçao = "direita"
 #ajustamento do desenho do personagem (usei a AI para entender como adaptar coreitamente ao mapa)
 largura_jogador = 44
 altura_jogador = 42
-sprite_y = 54 
-sprite_x_esquerda = 36 
-sprite_x_direita = 16
+monstro_y = 54 
+monstro_x_esquerda = 36 
+monstro_x_direita = 16
 
 pos_x = 80
 pos_y = 320 - altura_jogador
 velocidade = 0.25
-
 mostrar_colliders = False
 
 tiles = {
@@ -151,9 +150,9 @@ while True:
                 screen.blit(tileset, (j * tile_size_joguinho, i * tile_size_joguinho), (coluna * tile_size_joguinho, linha * tile_size_joguinho, tile_size_joguinho, tile_size_joguinho))
 
     if direçao == "esquerda":
-        screen.blit(Walk, (pos_x - sprite_x_esquerda, pos_y - sprite_y), (96*curr_frame_walk, 0, 96, 96))
+        screen.blit(Walk, (pos_x - monstro_x_esquerda, pos_y - monstro_y), (96*curr_frame_walk, 0, 96, 96))
     else:
-        screen.blit(Walk_espelho, (pos_x - sprite_x_direita, pos_y - sprite_y), (96*(5 - curr_frame_walk), 0, 96, 96))
+        screen.blit(Walk_espelho, (pos_x - monstro_x_direita, pos_y - monstro_y), (96*(5 - curr_frame_walk), 0, 96, 96))
     if mostrar_colliders:
         pygame.draw.rect(screen, (0,0,255), collider_jogador,2)
         for collider in colliders:
